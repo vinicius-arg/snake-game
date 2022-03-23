@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <title>Snake Game</title>
+</head>
+<body>
+    <div class="game-container">
+        <div id="screen-protector"></div>
+        <canvas id="game" width="400" height="400">Your browser doesn't support this HTML.</canvas>
+        <button id="play-btn">PLAY</button>
+    </div>
+    <script src="./script/script.js"></script>
+
+    <script>
+            const game = document.querySelector("#game");
+            const play = document.querySelector("#play-btn");
+            const scrnPrt = document.querySelector("#screen-protector");
+            const chessBg = game.getContext("2d");
+            const snake = game.getContext("2d");
+            const apple = game.getContext("2d");
+
+            // Funcionalidades de "play"
+
+            play.addEventListener("click", () => {
+                setTimeout(function () {
+                    play.style.display = "none";
+                    scrnPrt.style.display ="none";
+                    move();
+                },100);
+            } ) 
+
+            // Criar fundo xadrez
+
+            function chess (x,y) {
+                chessBg.beginPath();
+                chessBg.rect(x,y,20,20);
+                chessBg.fillStyle = "#2f6305";
+                chessBg.fill();
+            }
+
+            let x = 0;
+            let y = 0;
+            let deslocarFileira;
+
+            function applyChess () {
+                while (x <= 420 && y <= 400) { 
+                    
+                    if (x >= 400) {
+                        x > 400 ? deslocarFileira = false : deslocarFileira = true;
+
+                        x = 20;
+                        y += 20;
+
+                        // Para não criar linhas paralelas
+
+                        if (deslocarFileira == true) {
+                            x = 20;
+                        } else {
+                            x = 0;
+                        }
+
+                        chess(x,y);
+                    }
+
+                    chess(x,y);
+                    x += 40;
+                }
+            }
+
+            applyChess();
+
+            // Gerar jogador 
+
+            snake.beginPath();
+            snake.rect(40, 180, 60, 20);
+            snake.fillStyle = "#489b9b";
+            snake.fill();
+            
+            // Movimentar sprite
+
+            function move () {
+                setInterval(function () {
+
+                },100);
+            }
+
+            function changeDirection (x,y) {
+                snake.beginPath();
+                snake.rect(60, 180, 60, 20);
+                snake.fillStyle = "#489b9b";
+                snake.fill();
+            }
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key == "ArrowUp") {
+
+                }
+
+                if (e.key == "ArrowDown") {
+                    
+                }
+
+                if (e.key == "ArrowLeft") {
+                    
+                }
+
+                if (e.key == "ArrowRight") {
+                     if (e.key != registerKey) {
+
+                         changeDirection(x,y);
+                     }
+                }
+
+                let registerKey = e.key;
+            })
+            
+            // Aumentar sprite
+
+            // Gerar maçãs
+
+            function summonApple (x,y) {
+
+            }
+
+            let appleBeginAng = 2*Math.PI;
+            let appleEndAng = 0;
+
+            apple.beginPath();
+            apple.arc(10,10,8,appleBeginAng,appleEndAng);
+            apple.fillStyle = "red";
+            apple.fill();
+
+            // Atualizar tela
+    </script>
+</body>
+</html>
