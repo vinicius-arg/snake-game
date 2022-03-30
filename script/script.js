@@ -25,8 +25,8 @@ window.addEventListener("load", function () {
 
     // Criar cobra;
 
-    let snakeX = snakeStartX = 4;
-    let snakeY = snakeStartY = 10; // Localização inicial da cobra;
+    let snakeX = 4;
+    let snakeY = 10; // Localização inicial da cobra;
 
     ctx.beginPath();
     ctx.fillStyle = "blue";
@@ -86,11 +86,14 @@ window.addEventListener("load", function () {
     // Se a cobra sair da tela;
 
 
-    const x = 8;
-    // setInterval(game, 1000/x); // Para repintar tela;
+    const x = 1;
+    setInterval(game, 1000/x); // Para repintar tela;
 
     function game () {
         // Direção da cobra;
+
+        let right;
+
         if (nextX == -1 && nextY == 0) {
             snakeX--;
         }
@@ -101,33 +104,44 @@ window.addEventListener("load", function () {
 
         if (nextX == 1 && nextY == 0) {
             snakeX++;
+            right = true; // Para indicar que o jogo iniciou;
         }
 
         if (nextX == 0 && nextY == 1) {
             snakeY++;
         }
         
-        ctx.beginPath();
-        ctx.fillStyle = "blue";
-        ctx.fillRect(snakeX*screen, snakeY*screen, 20, 20);
+        // Valores iniciais de tailCoords;
+
+        tailCoords[0] = {x: (snakeX-1), y: snakeY};
+        tailCoords[1] = {x: (snakeX-2), y: snakeY};
 
         // Rastro contínuo;
-        for (let i = 0; i <= tail; i++) {
+
+        if (right == true) {
             tailCoords.push(
                 {
-                x: snakeX,
-                y: snakeY
+                    x: snakeX,
+                    y: snakeY
                 }
             );
+        
 
-            ctx.beginPath();
-            ctx.fillStyle = "blue";
-            ctx.fillRect(tailCoords[i].x * screen, tailCoords[i].y * screen, 20, 20);
+            for (let i = 0; i <= tail; i++) {
+                ctx.beginPath();
+                ctx.fillStyle = "blue";
+                ctx.fillRect(tailCoords[i].x * screen, tailCoords[i].y * screen, 20, 20);
+                console.log(tailCoords)
 
-            if (true) {
-
+                // Se for maior que o tamanho da cauda, remove o primeiro elemento do array;
+                if (tailCoords.length > tail + 1) {
+                    tailCoords.shift();
+                }
             }
         }
+
+        // Área de testes
+        // console.log(tailCoords);
 
     }
 });
