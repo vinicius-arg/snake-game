@@ -1,5 +1,7 @@
 window.addEventListener("load", function () {
     console.log("Página carregada.");
+    var snakeColor = "#183c74";
+    var bgColor = "#387938";
 
     // Eventos de "play";
 
@@ -22,36 +24,40 @@ window.addEventListener("load", function () {
 
     const screen = 20; // 20x20;
     ctx.beginPath();
-    ctx.fillStyle = "green";
+    ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, 400, 400);
 
     // Criar xadrez;
 
-    let y = 0;
-    let changeX;
-    for (let x = 0; x <= 20; x += 2) {
-        x % 2 == 0 ? changeX = true : changeX = false; 
+    function chess () {
+        let y = 0;
+        let changeX;
+        for (let x = 0; x <= 20; x += 2) {
+            x % 2 == 0 ? changeX = true : changeX = false; 
 
-        ctx.beginPath();
-        ctx.fillStyle = "darkgreen";
-        ctx.fillRect(x * screen, y * screen, 20, 20);
-        
-        if (x >= 19) {
-            x = -1;
-            y += 1;
-
-            if (changeX == true) {
+            ctx.beginPath();
+            ctx.fillStyle = "darkgreen";
+            ctx.fillRect(x * screen, y * screen, 20, 20);
+            
+            if (x >= 19) {
                 x = -1;
-            } else {
-                x = -2;
+                y += 1;
+
+                if (changeX == true) {
+                    x = -1;
+                } else {
+                    x = -2;
+                }
+            }
+
+            // Para finalizar o looping;
+            if (y >= 20) {
+                x = 20;
             }
         }
-
-        // Para finalizar o looping;
-        if (y >= 20) {
-            x = 20;
-        }
     }
+
+    // chess();
 
     // Criar cobra;
 
@@ -59,7 +65,7 @@ window.addEventListener("load", function () {
     let snakeY = 10; // Localização inicial da cobra;
 
     ctx.beginPath();
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = snakeColor;
     ctx.fillRect(snakeX*screen, snakeY*screen, 20, 20);
     const defaultTail = 2;
     let tail = defaultTail;
@@ -67,7 +73,7 @@ window.addEventListener("load", function () {
     // Rastro inicial;
     for (let i = 0; i <= tail; i++) {
         ctx.beginPath();
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = snakeColor;
         ctx.fillRect((snakeX-i)*screen, (snakeY)*screen, 20, 20);
     }
 
@@ -121,42 +127,81 @@ window.addEventListener("load", function () {
         }
     })
 
+    function gameOVER () {
+        alert("GAME OVER!");
+        location.reload();
+        // Provisório;
+    }
+
     function game () {
         if (start == true) {
+            // Repintar tela verde;
             ctx.beginPath();
-            ctx.fillStyle = "green";
+            ctx.fillStyle = bgColor;
             ctx.fillRect(0, 0, 400, 400);
+
+            // Repintar xadrez;
+
+            // chess();
 
             // Repintar maçã;
 
-                ctx.beginPath();
-                ctx.fillStyle = "red";
-                ctx.arc(appleX * screen, appleY * screen, 8, beginArc, endArc);
-                ctx.fill();
+            ctx.beginPath();
+            ctx.fillStyle = "red";
+            ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
 
             // Se comer a maçã;
 
             if (snakeX == appleX && snakeY == appleY) {
+                tail++;
                 appleX = Math.floor(Math.random() * screen);
                 appleY = Math.floor(Math.random() * screen);
 
-                if (appleX == 0 || appleX == 20) {
-                    appleX = 1;
+                // Para não spawnar na cauda;
+                for (let i = 0; i <= tailCoords.length; i++) {
+                    if (appleX == tailCoords[i].x && appleY == tailCoords[i].y) {
+                        appleX = Math.floor(Math.random() * screen);
+                        appleY = Math.floor(Math.random() * screen);
+                    }
                 }
 
-                if (appleY == 0 || appleY == 20) {
-                    appleY = 1;
+                // Para não spawnar muito perto das bordas;
+                if (appleX == 0) {
+                    appleX = 2;
+                }
+
+                if (appleX == 20) {
+                    appleX = 18;
+                }
+
+                if (appleY == 0) {
+                    appleY = 2;
+                }
+
+                if (appleY == 20) {
+                    appleY = 18;
                 }
 
                 ctx.beginPath();
                 ctx.fillStyle = "red";
-                ctx.arc(appleX * screen, appleY * screen, 8, beginArc, endArc);
-                ctx.fill();
+                ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
             }
 
             // Se a cobra bater na própria cauda;
 
-            // Se a cobra sair da tela;
+            for (let i = tail - 2; i >= 2; i--) {
+                if (snakeX == tailCoords[i].x && snakeY == tailCoords[i].y) {
+                    clearInterval(interval);
+                    gameOver();
+                }
+            }
+
+            // Se a cobra sair da tela
+
+            if (snakeX >= 20 || snakeX <= 0 || snakeY >= 20 || snakeY <= 0) {
+                clearInterval(interval);
+                gameOVER();
+            }
 
             // Direção da cobra;
 
@@ -179,7 +224,7 @@ window.addEventListener("load", function () {
             // Rastro contínuo e repintura do jogador;
 
             ctx.beginPath();
-            ctx.fillStyle = "blue";
+            ctx.fillStyle = snakeColor;
             ctx.fillRect(snakeX * screen, snakeY * screen, 20, 20);
 
             tailCoords.push(
@@ -191,7 +236,7 @@ window.addEventListener("load", function () {
         
             for (let i = tail; i >= 0; i--) {
                 ctx.beginPath();
-                ctx.fillStyle = "blue";
+                ctx.fillStyle = snakeColor;
                 ctx.fillRect(tailCoords[i].x * screen, tailCoords[i].y * screen, 20, 20);
 
                 // Se for maior que o tamanho da cauda, remove o primeiro elemento do array;
@@ -202,6 +247,7 @@ window.addEventListener("load", function () {
             
             // Área de testes
             console.log(tailCoords);
+            console.log(tail);
         }
     }
 });
