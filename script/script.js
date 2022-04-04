@@ -4,11 +4,15 @@ window.addEventListener("load", function () {
     // Eventos de "play";
 
     const play = document.getElementById("play-btn");
+    let start;
 
     play.addEventListener("click", function () {
         const screenProtector = document.getElementById("screen-protector");
         screenProtector.style.display = "none";
         play.style.display = "none";
+        nextX = 1;
+        nextY = 0;
+        start = true;
     });
 
     const canvas = document.getElementById("game");
@@ -42,6 +46,10 @@ window.addEventListener("load", function () {
     }
 
     let tailCoords = [];
+
+    // Valores iniciais de tailCoords;
+    tailCoords[0] = {x: (snakeX-1), y: snakeY};
+    tailCoords[1] = {x: (snakeX), y: snakeY};
 
     // Controles;
 
@@ -87,38 +95,44 @@ window.addEventListener("load", function () {
 
 
     const x = 1;
-    setInterval(game, 1000/x); // Para repintar tela;
+    const interval = setInterval(game, 1000/x); // Para repintar tela;
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key == "q") {
+            clearInterval(interval);
+        }
+    })
 
     function game () {
-        // Direção da cobra;
+        if (start == true) {
+            ctx.beginPath();
+            ctx.fillStyle = "green";
+            ctx.fillRect(0, 0, 400, 400);
 
-        let right;
+            // Direção da cobra;
 
-        if (nextX == -1 && nextY == 0) {
-            snakeX--;
-        }
+            if (nextX == -1 && nextY == 0) {
+                snakeX--;
+            }
 
-        if (nextX == 0 && nextY == -1) {
-            snakeY--;
-        }
+            if (nextX == 0 && nextY == -1) {
+                snakeY--;
+            }
 
-        if (nextX == 1 && nextY == 0) {
-            snakeX++;
-            right = true; // Para indicar que o jogo iniciou;
-        }
+            if (nextX == 1 && nextY == 0) {
+                snakeX++;
+            }
 
-        if (nextX == 0 && nextY == 1) {
-            snakeY++;
-        }
-        
-        // Valores iniciais de tailCoords;
+            if (nextX == 0 && nextY == 1) {
+                snakeY++;
+            }
 
-        tailCoords[0] = {x: (snakeX-1), y: snakeY};
-        tailCoords[1] = {x: (snakeX-2), y: snakeY};
+            // Rastro contínuo e repintura do jogador;
 
-        // Rastro contínuo;
+            ctx.beginPath();
+            ctx.fillStyle = "blue";
+            ctx.fillRect(snakeX * screen, snakeY * screen, 20, 20);
 
-        if (right == true) {
             tailCoords.push(
                 {
                     x: snakeX,
@@ -126,22 +140,19 @@ window.addEventListener("load", function () {
                 }
             );
         
-
-            for (let i = 0; i <= tail; i++) {
+            for (let i = tail; i >= 0; i--) {
                 ctx.beginPath();
                 ctx.fillStyle = "blue";
                 ctx.fillRect(tailCoords[i].x * screen, tailCoords[i].y * screen, 20, 20);
-                console.log(tailCoords)
 
                 // Se for maior que o tamanho da cauda, remove o primeiro elemento do array;
                 if (tailCoords.length > tail + 1) {
                     tailCoords.shift();
                 }
             }
+            
+            // Área de testes
+            console.log(tailCoords);
         }
-
-        // Área de testes
-        // console.log(tailCoords);
-
     }
 });
