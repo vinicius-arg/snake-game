@@ -27,6 +27,32 @@ window.addEventListener("load", function () {
 
     // Criar xadrez;
 
+    let y = 0;
+    let changeX;
+    for (let x = 0; x <= 20; x += 2) {
+        x % 2 == 0 ? changeX = true : changeX = false; 
+
+        ctx.beginPath();
+        ctx.fillStyle = "darkgreen";
+        ctx.fillRect(x * screen, y * screen, 20, 20);
+        
+        if (x >= 19) {
+            x = -1;
+            y += 1;
+
+            if (changeX == true) {
+                x = -1;
+            } else {
+                x = -2;
+            }
+        }
+
+        // Para finalizar o looping;
+        if (y >= 20) {
+            x = 20;
+        }
+    }
+
     // Criar cobra;
 
     let snakeX = 4;
@@ -79,26 +105,18 @@ window.addEventListener("load", function () {
 
     // Criar maçã;
 
-    const beginArc = 0;
-    const endArc = Math.PI * 2;
+    let appleX = 15;
+    let appleY = 15;
 
     ctx.beginPath();
     ctx.fillStyle = "red";
-    ctx.arc(15*screen, 15*screen, 8, beginArc, endArc);
-    ctx.fill();
+    ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
 
-    // Se comer a maçã;
-
-    // Se a cobra bater na própria cauda;
-
-    // Se a cobra sair da tela;
-
-
-    const x = 1;
+    const x = 8;
     const interval = setInterval(game, 1000/x); // Para repintar tela;
 
     document.addEventListener("keydown", function (e) {
-        if (e.key == "q") {
+        if (e.key == "s") {
             clearInterval(interval);
         }
     })
@@ -108,6 +126,37 @@ window.addEventListener("load", function () {
             ctx.beginPath();
             ctx.fillStyle = "green";
             ctx.fillRect(0, 0, 400, 400);
+
+            // Repintar maçã;
+
+                ctx.beginPath();
+                ctx.fillStyle = "red";
+                ctx.arc(appleX * screen, appleY * screen, 8, beginArc, endArc);
+                ctx.fill();
+
+            // Se comer a maçã;
+
+            if (snakeX == appleX && snakeY == appleY) {
+                appleX = Math.floor(Math.random() * screen);
+                appleY = Math.floor(Math.random() * screen);
+
+                if (appleX == 0 || appleX == 20) {
+                    appleX = 1;
+                }
+
+                if (appleY == 0 || appleY == 20) {
+                    appleY = 1;
+                }
+
+                ctx.beginPath();
+                ctx.fillStyle = "red";
+                ctx.arc(appleX * screen, appleY * screen, 8, beginArc, endArc);
+                ctx.fill();
+            }
+
+            // Se a cobra bater na própria cauda;
+
+            // Se a cobra sair da tela;
 
             // Direção da cobra;
 
