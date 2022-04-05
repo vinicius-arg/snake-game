@@ -1,6 +1,6 @@
 window.addEventListener("load", function () {
     console.log("Página carregada.");
-    var snakeColor = "#183c74";
+    var snakeColor = "#0c5f0c";
     var bgColor = "#303030";
 
     // Eventos de "play";
