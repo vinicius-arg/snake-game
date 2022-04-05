@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
     console.log("Página carregada.");
     var snakeColor = "#183c74";
-    var bgColor = "#387938";
+    var bgColor = "#303030";
 
     // Eventos de "play";
 
@@ -17,10 +17,29 @@ window.addEventListener("load", function () {
         start = true;
     });
 
+    // Options;
+
+    let chessYes = false;
+
+    let chessBg = document.getElementById("chess");
+    chessBg.addEventListener("click", function () {
+        if (chessYes == true) {
+            chessBg.innerHTML = "Habilitar<br>fundo xadrez";
+            chessYes = false;
+        } else {
+            chessBg.innerHTML = "Desabilitar<br>fundo xadrez";
+            chessYes = true;
+        }
+
+        if (chessYes == true) {
+            chess();
+        }
+    });
+    
+    //  Dimensões da tela;
+
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
-
-    //  Dimensões da tela;
 
     const screen = 20; // 20x20;
     ctx.beginPath();
@@ -36,7 +55,7 @@ window.addEventListener("load", function () {
             x % 2 == 0 ? changeX = true : changeX = false; 
 
             ctx.beginPath();
-            ctx.fillStyle = "darkgreen";
+            ctx.fillStyle = "#383838";
             ctx.fillRect(x * screen, y * screen, 20, 20);
             
             if (x >= 19) {
@@ -56,8 +75,6 @@ window.addEventListener("load", function () {
             }
         }
     }
-
-    // chess();
 
     // Criar cobra;
 
@@ -123,11 +140,14 @@ window.addEventListener("load", function () {
     const x = 8;
     const interval = setInterval(game, 1000/x); // Para repintar tela;
 
-    document.addEventListener("keydown", function (e) {
-        if (e.key == "s") {
-            clearInterval(interval);
-        }
-    })
+    // Declarações de score;
+
+    let bestScore = document.getElementById("best-score");
+    let score = document.getElementById("score");
+
+    bestScore.innerHTML = localStorage.getItem("best-score"); // Para recupar o best score anterior;
+
+    score.innerHTML = 0;
 
     function gameOVER () {
         alert("GAME OVER!");
@@ -137,6 +157,17 @@ window.addEventListener("load", function () {
 
     function game () {
         if (start == true) {
+            // Scores;
+
+            score.innerHTML = tail - 2;
+            // 2 é o tamanho base;
+
+            if ((tail - 2) >= localStorage.getItem("best-score")) {
+                bestScore.innerHTML = tail - 2;
+
+                localStorage.setItem("best-score", (tail - 2));
+            }
+
             // Repintar tela verde;
             ctx.beginPath();
             ctx.fillStyle = bgColor;
@@ -144,7 +175,9 @@ window.addEventListener("load", function () {
 
             // Repintar xadrez;
 
-            // chess();
+            if (chessYes == true) {
+                chess();
+            }
 
             // Repintar maçã;
 
@@ -247,10 +280,6 @@ window.addEventListener("load", function () {
                     tailCoords.shift();
                 }
             }
-            
-            // Área de testes
-            console.log(tailCoords);
-            console.log(tail);
         }
     }
 });

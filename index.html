@@ -10,10 +10,27 @@
     <title>Snake Game</title>
 </head>
 <body>
-    <div class="game-container">
-        <div id="screen-protector"></div>
-        <canvas id="game" width="400" height="400">Your browser doesn't support canvas HTML.</canvas>
-        <button id="play-btn">PLAY</button>
+    <div class="game-general">
+        <div class="game-container">
+            <div id="screen-protector"></div>
+            <canvas id="game" width="400" height="400">Your browser doesn't support canvas HTML.</canvas>
+            <button id="play-btn">PLAY</button>
+        </div>
+        <div id="options">
+            <p id="chess">
+                Habilitar<br>fundo xadrez
+            </p>
+        </div>
+    </div>
+
+
+    <div class="board">
+        <div class="score">
+            <p id="score"></p>
+        </div>
+        <div class="score">
+            <p id="best-score"></p>
+        </div>
     </div>
 
     <audio id="sound" style="display: none;" src="./assets/score.mp3"></audio>
