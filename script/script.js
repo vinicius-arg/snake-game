@@ -118,6 +118,8 @@ window.addEventListener("load", function () {
     ctx.fillStyle = "red";
     ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
 
+    let sound = document.getElementById("sound");
+
     const x = 8;
     const interval = setInterval(game, 1000/x); // Para repintar tela;
 
@@ -154,6 +156,7 @@ window.addEventListener("load", function () {
 
             if (snakeX == appleX && snakeY == appleY) {
                 tail++;
+                sound.play();
                 appleX = Math.floor(Math.random() * screen);
                 appleY = Math.floor(Math.random() * screen);
 
