@@ -108,20 +108,28 @@ window.addEventListener("load", function () {
     document.addEventListener("keydown", function (e) {
         switch(e.key) {
             case "ArrowLeft":
-                nextX = -1;
-                nextY = 0;
+                if (nextX != 1 && nextY != 0) {
+                    nextX = -1;
+                    nextY = 0;
+                }
                 break;
             case "ArrowUp":
-                nextX = 0;
-                nextY = -1;
+                if (nextX != 0 && nextY != 1) {
+                    nextX = 0;
+                    nextY = -1;
+                }
                 break;
             case "ArrowRight":
-                nextX = 1;
-                nextY = 0;
+                if (nextX != -1 && nextY != 0) {
+                    nextX = 1;
+                    nextY = 0;
+                }
                 break;
             case "ArrowDown":
-                nextX = 0;
-                nextY = 1;
+                if (nextX != 0 && nextY != -1) {
+                    nextX = 0;
+                    nextY = 1;
+                }
                 break;
         }
     });
@@ -221,7 +229,7 @@ window.addEventListener("load", function () {
                 ctx.beginPath();
                 ctx.fillStyle = "red";
                 ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
-            }
+            } // Manutenção
 
             // Se a cobra bater na própria cauda;
 
@@ -239,20 +247,24 @@ window.addEventListener("load", function () {
                 gameOVER();
             }
 
-            // Direção da cobra;
+            // Direção da cobra para
 
+            // ...a esquerda;
             if (nextX == -1 && nextY == 0) {
                 snakeX--;
             }
 
+            // ...cima;
             if (nextX == 0 && nextY == -1) {
                 snakeY--;
             }
 
+            // ...a direita;
             if (nextX == 1 && nextY == 0) {
                 snakeX++;
             }
 
+            // ...baixo;
             if (nextX == 0 && nextY == 1) {
                 snakeY++;
             }

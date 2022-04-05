@@ -116,5 +116,19 @@ body {
 }
 
 #best-score {
-    color: #ada317;
+    color: rgb(173, 163, 23);
+}
+
+#best-score::before {
+    content: '';
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background: url(../assets/crown.png);
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    top: 2px;
+    right: 10px;
 }
