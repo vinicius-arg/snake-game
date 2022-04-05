@@ -195,7 +195,7 @@ window.addEventListener("load", function () {
             for (let i = tail - 2; i >= 2; i--) {
                 if (snakeX == tailCoords[i].x && snakeY == tailCoords[i].y) {
                     clearInterval(interval);
-                    gameOver();
+                    gameOVER();
                 }
             }
 
