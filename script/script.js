@@ -2,6 +2,7 @@ window.addEventListener("load", function () {
     console.log("Página carregada.");
     var snakeColor = "#0c5f0c";
     var bgColor = "#303030";
+    var appleColor = "#ca2121";
 
     // Eventos de "play";
 
@@ -39,7 +40,7 @@ window.addEventListener("load", function () {
             ctx.fillRect(2*screen, snakeY*screen, 60, 20);
             // Repinta maçã;
             ctx.beginPath();
-            ctx.fillStyle = "red";
+            ctx.fillStyle = appleColor;
             ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
         } else {
             ctx.beginPath();
@@ -51,7 +52,7 @@ window.addEventListener("load", function () {
             ctx.fillRect(2*screen, snakeY*screen, 60, 20);
             // Repinta maçã;
             ctx.beginPath();
-            ctx.fillStyle = "red";
+            ctx.fillStyle = appleColor;
             ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
         }
     });
@@ -160,12 +161,12 @@ window.addEventListener("load", function () {
     let appleY = 15;
 
     ctx.beginPath();
-    ctx.fillStyle = "#ca2121";
+    ctx.fillStyle = appleColor;
     ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
 
     let sound = document.getElementById("sound");
 
-    const x = 8;
+    let x = 8;
     const interval = setInterval(game, 1000/x); // Para repintar tela;
 
     // Declarações de score;
@@ -177,10 +178,24 @@ window.addEventListener("load", function () {
 
     score.innerHTML = 0;
 
+    const gOVERscreen = document.getElementById("game-over");
+
     function gameOVER () {
-        alert("GAME OVER!");
-        location.reload();
-        // Provisório;
+        let i = 0;
+        gOVERscreen.style.display = "block";
+
+        const interval = setInterval(function () {
+            gOVERscreen.style.opacity = i / 10;
+            i++;
+
+            if (i == 10) {
+                clearInterval(interval);
+            }
+        }, 20); // 200ms transition;
+
+            gOVERscreen.addEventListener("click", function () {
+            location.reload();
+        });
     }
 
     function game () {
@@ -210,7 +225,7 @@ window.addEventListener("load", function () {
             // Repintar maçã;
 
             ctx.beginPath();
-            ctx.fillStyle = "red";
+            ctx.fillStyle = appleColor;
             ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
 
             // Se comer a maçã;
@@ -218,23 +233,31 @@ window.addEventListener("load", function () {
             if (snakeX == appleX && snakeY == appleY) {
                 tail++;
                 sound.play();
+
+                // if (Math.floor((tail - 2)/5) > 1) {
+                //     const addition = 4;
+                //     let vel = Math.floor((tail - 2)/5) * addition;
+                //     x += vel; // A cada 5 pontos adiciona "addition" na velocidade;
+                //     console.log(x)
+                // } Inativo;
+
                 appleX = Math.floor(Math.random() * screen);
                 appleY = Math.floor(Math.random() * screen);
 
                 // Para não spawnar na cauda;
-                for (let i = 0; i <= tailCoords.length; i++) {
+                for (let i = 0; i <= tailCoords.length - 1; i++) {
                     if (appleX == tailCoords[i].x && appleY == tailCoords[i].y) {
                         appleX = Math.floor(Math.random() * screen);
                         appleY = Math.floor(Math.random() * screen);
                     }
                 }
-
+                
                 // Para não spawnar muito perto das bordas;
                 if (appleX == 0) {
                     appleX = 2;
                 }
 
-                if (appleX == 20) {
+                if (appleX == 19) {
                     appleX = 18;
                 }
 
@@ -242,14 +265,14 @@ window.addEventListener("load", function () {
                     appleY = 2;
                 }
 
-                if (appleY == 20) {
+                if (appleY == 19) {
                     appleY = 18;
                 }
 
                 ctx.beginPath();
-                ctx.fillStyle = "red";
+                ctx.fillStyle = appleColor;
                 ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
-            } // Manutenção
+            }
 
             // Se a cobra bater na própria cauda;
 
