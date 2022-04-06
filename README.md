@@ -6,7 +6,7 @@
 
 # Demonstração
 
-<img src="./assets/demo.gif" style="margin: auto">
+<img src="./assets/demo.gif" style="display: block; margin: auto">
 
 # Status do projeto
 
