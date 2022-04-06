@@ -10,6 +10,11 @@
     --background-color: #bd4b00;
 }
 
+::selection {
+    background-color: #4aa54a;
+    color: #000000;
+}
+
 body {
     background: url(../assets/wallpaper-b.png);
     background-size: 700px;
@@ -82,7 +87,14 @@ body {
     outline: 5px solid #000000;
 }
 
-#options {
+.tags {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 100px;
+}
+
+.mini-tag {
     width: 100px;
     height: 50px;
     background-color: #ffffff;
@@ -91,7 +103,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 100px;
+    margin-bottom: 10px;
 }
 
 #chess {
@@ -104,6 +116,23 @@ body {
 #chess:hover {
     font-weight: 700;
     cursor: pointer;
+}
+
+#gh-refer {
+    text-transform: uppercase;
+    font-size: 14px;
+    text-align: center;
+    margin: 5px;
+    font-weight: 400;
+}
+
+#gh-link {
+    text-decoration: none;
+    color: #808080;
+}
+
+#gh-link:hover {
+    text-decoration: underline;
 }
 
 .board {

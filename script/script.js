@@ -17,7 +17,7 @@ window.addEventListener("load", function () {
         start = true;
     });
 
-    // Options;
+    // Tags;
 
     let chessYes = false;
 
@@ -33,6 +33,26 @@ window.addEventListener("load", function () {
 
         if (chessYes == true) {
             chess();
+            // Repinta jogador;
+            ctx.beginPath();
+            ctx.fillStyle = snakeColor;
+            ctx.fillRect(2*screen, snakeY*screen, 60, 20);
+            // Repinta maçã;
+            ctx.beginPath();
+            ctx.fillStyle = "red";
+            ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
+        } else {
+            ctx.beginPath();
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, 400, 400);
+            // Repinta jogador;
+            ctx.beginPath();
+            ctx.fillStyle = snakeColor;
+            ctx.fillRect(2*screen, snakeY*screen, 60, 20);
+            // Repinta maçã;
+            ctx.beginPath();
+            ctx.fillStyle = "red";
+            ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
         }
     });
     
@@ -140,7 +160,7 @@ window.addEventListener("load", function () {
     let appleY = 15;
 
     ctx.beginPath();
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "#ca2121";
     ctx.fillRect(appleX * screen, appleY * screen, 20, 20);
 
     let sound = document.getElementById("sound");

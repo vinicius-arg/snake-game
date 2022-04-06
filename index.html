@@ -10,32 +10,41 @@
     <title>Snake Game</title>
 </head>
 <body>
-    <div class="game-general">
-        <div id="name">
-            <p id="title">SNAKE</p>
-            <!-- <p id="sub">GAME</p> -->
-        </div>
-        <div class="game-container">
-            <div id="screen-protector"></div>
-            <canvas id="game" width="400" height="400">Your browser doesn't support canvas HTML.</canvas>
-            <button id="play-btn">PLAY</button>
-        </div>
-        <div id="options">
-            <p id="chess">
-                Habilitar<br>fundo xadrez
-            </p>
-        </div>
-    </div>
+    <main>
+        <section class="game-general">
+            <header id="name">
+                <p id="title">SNAKE</p>
+            </header>
+            <div class="game-container">
+                <div id="screen-protector"></div>
+                <canvas id="game" width="400" height="400">Your browser doesn't support canvas HTML.</canvas>
+                <button id="play-btn">PLAY</button>
+            </div>
 
+            <article class="tags">
+                <div class="mini-tag">
+                    <p id="chess">
+                        Habilitar<br>fundo xadrez
+                    </p>
+                </div>
 
-    <div class="board">
-        <div class="score">
-            <p id="score"></p>
-        </div>
-        <div class="score">
-            <p id="best-score"></p>
-        </div>
-    </div>
+                <div class="mini-tag">
+                    <p id="gh-refer">
+                        Desenvolvido por <a id="gh-link" href="https://github.com/jvinicius-arg">J. Vinícius</a>
+                    </p>
+                </div>
+            </article>
+        </section>
+
+        <section class="board">
+            <div class="score">
+                <p id="score"></p>
+            </div>
+            <div class="score">
+                <p id="best-score"></p>
+            </div>
+        </section>
+    </main>
 
     <audio id="sound" style="display: none;" src="./assets/score.mp3"></audio>
     <script src="./script/script.js"></script>
