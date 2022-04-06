@@ -1,4 +1,4 @@
-<img src="./assets/banner.png" style="width: 100vh">
+<img src="./assets/banner.png" style="margin: auto">
 
 # Descrição
 
@@ -6,7 +6,7 @@
 
 # Demonstração
 
-<img src="./assets/demo.gif" style="width: 100vh">
+<img src="./assets/demo.gif" style="margin: auto">
 
 # Status do projeto
 
